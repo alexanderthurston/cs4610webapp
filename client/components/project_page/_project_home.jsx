@@ -27,7 +27,7 @@ export const ProjectHome = () => {
     setUser(res.user);
     const { tasks } = await api.get(`/projects/${params.id}/tasks`);
 
-    setTasks(tasks);
+    // setTasks(tasks);
     setDoneTasks(tasks.filter((task) => task.status === 'Done'));
     setIncompleteTasks(tasks.filter((task) => task.status === 'Incomplete'));
   }, []);
@@ -41,7 +41,7 @@ export const ProjectHome = () => {
       projectId: params.id,
     };
     const { task } = await api.post(`/projects/${params.id}/tasks`, taskBody);
-    setTasks([task, ...tasks]);
+    // setTasks([task, ...tasks]);
     setIncompleteTasks([task, ...incompleteTasks]);
     setTaskTitle('');
     setTaskDescription('');
@@ -52,7 +52,7 @@ export const ProjectHome = () => {
   const deleteTask = async (task) => {
     const { success } = await api.del(`projects/${params.id}/tasks/${task.id}`);
     if (success) {
-      setTasks(tasks.filter((t) => t !== task));
+      // setTasks(tasks.filter((t) => t !== task));
       setDoneTasks(doneTasks.filter((t) => t !== task));
       setIncompleteTasks(incompleteTasks.filter((t) => t !== task));
     } else {
@@ -60,6 +60,8 @@ export const ProjectHome = () => {
     }
   };
 
+  console.log(doneTasks);
+  console.log(incompleteTasks);
 
   return (
     <div>
@@ -117,6 +119,8 @@ export const ProjectHome = () => {
             setDoneTasks={setDoneTasks}
             setTasks={setTasks}
             allTasks={tasks}
+            doneTasks={doneTasks}
+            incompleteTasks={incompleteTasks}
             deleteTask={deleteTask}
             user={user}
           />
@@ -128,6 +132,8 @@ export const ProjectHome = () => {
             setIncompleteTasks={setIncompleteTasks}
             setDoneTasks={setDoneTasks}
             allTasks={tasks}
+            doneTasks={doneTasks}
+            incompleteTasks={incompleteTasks}
             deleteTask={deleteTask}
             user={user}
           />
