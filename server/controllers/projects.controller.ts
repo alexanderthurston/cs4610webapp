@@ -83,4 +83,11 @@ export class ProjectsController {
     task = await this.tasksService.createTask(task);
     return { task };
   }
+
+  @Delete('projects/:id/tasks/:task_id')
+  public async deleteTask(@Param('task_id') task_id: string) {
+    const task = await this.tasksService.findTaskById(parseInt(task_id, 10));
+    this.tasksService.deleteTask(task);
+    return { success: true };
+  }
 }

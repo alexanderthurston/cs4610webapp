@@ -4,7 +4,7 @@ import { Button } from '../common/button';
 import { BlueButton } from '../common/blue_button';
 import { RedButton } from '../common/red_button';
 
-export const Task = ({ task, setIncompleteTasks, setDoneTasks, allTasks }) => {
+export const Task = ({ task, setIncompleteTasks, setDoneTasks, allTasks, deleteTask }) => {
   const api = useContext(ApiContext);
 
   const updateTask = async (newStatus) => {
@@ -34,7 +34,7 @@ export const Task = ({ task, setIncompleteTasks, setDoneTasks, allTasks }) => {
       <p>Time: {task.timeEstimation}</p>
       <p>Status: {task.status}</p>
       <div className="py-2">
-        <RedButton onClick={() => console.log('Delete stub')}>Delete</RedButton>
+        <RedButton onClick={() => deleteTask(task)}>Delete</RedButton>
         <Button onClick={() => console.log('Assign to me!')}>Assign to me</Button>
         {task.status === 'Incomplete' ? (
           <BlueButton onClick={() => updateTask('Done')}>Mark Done</BlueButton>

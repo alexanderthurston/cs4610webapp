@@ -1,6 +1,6 @@
 import { Task } from './task';
 
-export const Tasks = ({ tasks, setIncompleteTasks, setDoneTasks, allTasks }) => {
+export const Tasks = ({ tasks, setIncompleteTasks, setDoneTasks, allTasks, deleteTask }) => {
   return (
     <div className="flex-auto">
       {tasks.map((task) => (
@@ -10,6 +10,7 @@ export const Tasks = ({ tasks, setIncompleteTasks, setDoneTasks, allTasks }) => 
           setIncompleteTasks={setIncompleteTasks}
           setDoneTasks={setDoneTasks}
           allTasks={allTasks}
+          deleteTask={deleteTask}
         />
       ))}
     </div>

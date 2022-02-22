@@ -19,4 +19,12 @@ export class TasksService {
   createTask(task: Task): Promise<Task> {
     return this.taskRepository.save(task);
   }
+
+  findTaskById(id: number): Promise<Task> {
+    return this.taskRepository.findOne(id);
+  }
+
+  deleteTask(task: Task) {
+    this.taskRepository.delete(task);
+  }
 }
