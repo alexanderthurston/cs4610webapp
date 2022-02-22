@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpException, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, Param, Post, Put } from '@nestjs/common';
 import { JwtBody } from 'server/decorators/jwt_body.decorator';
 import { JwtBodyDto } from 'server/dto/jwt_body.dto';
 import { Project } from 'server/entities/project.entity';
@@ -60,6 +60,20 @@ export class ProjectsController {
   @Post('/projects/:id/tasks')
   public async createTask(@JwtBody() jwtBody: JwtBodyDto, @Body() body: TaskBody) {
     let task = new Task();
+    task.userId = body.userId;
+    task.projectId = body.projectId;
+    task.title = body.title;
+    task.description = body.description;
+    task.timeEstimation = body.timeEstimation;
+    task.status = body.status;
+    task = await this.tasksService.createTask(task);
+    return { task };
+  }
+
+  @Put('projects/:id/tasks/:task_id')
+  public async updateTask(@Param('task_id') task_id: string, @Body() body: TaskBody) {
+    let task = new Task();
+    task.id = parseInt(task_id, 10);
     task.userId = body.userId;
     task.projectId = body.projectId;
     task.title = body.title;

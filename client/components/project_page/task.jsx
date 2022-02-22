@@ -10,7 +10,7 @@ export const Task = ({ task, setIncompleteTasks, setDoneTasks, allTasks }) => {
   const updateTask = async (newStatus) => {
     task.status = newStatus;
     const taskBody = {
-      id: task.id,
+      // id: task.id,
       userId: task.userId,
       title: task.title,
       description: task.description,
@@ -19,7 +19,7 @@ export const Task = ({ task, setIncompleteTasks, setDoneTasks, allTasks }) => {
       projectId: task.projectId,
     };
     // console.log(`/projects/${task.projectId}/tasks`);
-    const { updatedTask } = await api.post(`/projects/${task.projectId}/tasks`, taskBody);
+    const { updatedTask } = await api.put(`/projects/${task.projectId}/tasks/${task.id}`, taskBody);
 
     setDoneTasks(allTasks.filter((e) => e.status === 'Done'));
     setIncompleteTasks(allTasks.filter((e) => e.status === 'Incomplete'));
