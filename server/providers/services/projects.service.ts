@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Project } from 'server/entities/project.entity';
-import { Repository } from 'typeorm';
+import { getRepository, Repository } from 'typeorm';
 
 @Injectable()
 export class ProjectsService {
@@ -14,6 +14,14 @@ export class ProjectsService {
     return this.projectRepository.find({
       where: { leaderId },
     });
+  }
+
+  findAllWithMember(memberId: number): Promise<Project[]> {
+    return this.projectRepository
+      .createQueryBuilder('project')
+      .innerJoin('project.projectMembers', 'projectMember')
+      .where('"projectMember"."userId" = :memberId', { memberId })
+      .getMany();
   }
 
   createProject(project: Project): Promise<Project> {

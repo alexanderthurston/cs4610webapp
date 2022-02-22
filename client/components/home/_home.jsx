@@ -9,7 +9,8 @@ import { PageHeader } from '../common/page_header';
 
 export const Home = () => {
   const [, setAuthToken] = useContext(AuthContext);
-  const [projects, setProjects] = useState([]);
+  const [leaderProjects, setLeaderProjects] = useState([]);
+  const [memberProjects, setMemberProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState('');
   const api = useContext(ApiContext);
@@ -19,8 +20,10 @@ export const Home = () => {
   useEffect(async () => {
     const res = await api.get('/users/me');
     setUser(res.user);
-    const { projects } = await api.get('/projects');
-    setProjects(projects);
+    const { leaderProjects } = await api.get('/projects/leader');
+    setLeaderProjects(leaderProjects);
+    const { memberProjects } = await api.get('/projects/member');
+    setMemberProjects(memberProjects);
     setLoading(false);
   }, []);
 
@@ -41,19 +44,20 @@ export const Home = () => {
     };
     const { project } = await api.post('/projects', projectBody);
     console.log(projects);
-    setProjects([...projects, project]);
+    setLeaderProjects([...leaderProjects, project]);
   };
 
   const deleteProject = async (project) => {
     const { success } = await api.del(`/projects/${project.id}`);
     if (success) {
-      setProjects(projects.filter((p) => p !== project));
+      setLeaderProjects(leaderProjects.filter((p) => p !== project));
     } else {
       setErrorMessage('Deletion failed. Please refresh and try again.');
     }
   };
 
-  console.log(projects);
+  console.log(leaderProjects);
+  console.log(memberProjects);
 
   return (
     <div>
@@ -82,7 +86,7 @@ export const Home = () => {
           <Button onClick={saveProject}>Save</Button>
         </div>
       </div>
-      <Projects projects={projects} deleteProject={deleteProject} />
+      <Projects leaderProjects={leaderProjects} memberProjects={memberProjects} deleteProject={deleteProject} />
     </div>
   );
 };
