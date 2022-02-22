@@ -82,14 +82,14 @@ export class ProjectsController {
   @Post('/projects/:id/tasks')
   public async createTask(@JwtBody() jwtBody: JwtBodyDto, @Body() body: TaskBody) {
     let task = new Task();
-    task.userId = jwtBody.userId;
+    // task.userId = jwtBody.userId;
     task.projectId = body.projectId;
     task.title = body.title;
     task.description = body.description;
     task.timeEstimation = body.timeEstimation;
     task.status = body.status;
-    task.user = await this.usersService.find(jwtBody.userId);
-    task.project = await this.projectsService.findProjectById(body.projectId);
+    // task.user = await this.usersService.find(jwtBody.userId);
+    // task.project = await this.projectsService.findProjectById(body.projectId);
     task = await this.tasksService.createTask(task);
     return { task };
   }

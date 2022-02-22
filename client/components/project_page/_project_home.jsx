@@ -60,7 +60,6 @@ export const ProjectHome = () => {
     }
   };
 
-
   return (
     <div>
       <PageHeader />
