@@ -109,7 +109,7 @@ export class ProjectsController {
     // task.project = await this.projectsService.findProjectById(body.projectId);
     task = await this.tasksService.createTask(task);
     task = await this.tasksService.findTaskById(parseInt(task_id, 10));
-    return { task };
+    return { updatedTask: task };
   }
 
   @Delete('projects/:id/tasks/:task_id')

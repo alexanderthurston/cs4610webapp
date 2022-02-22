@@ -40,7 +40,7 @@ export const Task = ({
   };
 
   const updateTaskAssignment = async (newUserId) => {
-    task.userId = newUserId;
+    // task.userId = newUserId;
     console.log(`User id: ${user.id}`);
     const taskBody = {
       userId: newUserId,
@@ -52,8 +52,13 @@ export const Task = ({
     };
     const { updatedTask } = await api.put(`/projects/${task.projectId}/tasks/${task.id}`, taskBody);
 
-    setDoneTasks(allTasks.filter((e) => e.status === 'Done'));
-    setIncompleteTasks(allTasks.filter((e) => e.status === 'Incomplete'));
+    if (updatedTask.status === 'Done') {
+      setDoneTasks([updatedTask, ...doneTasks.filter((e) => e !== task)]);
+      setIncompleteTasks(incompleteTasks.filter((e) => e !== task));
+    } else {
+      setDoneTasks(doneTasks.filter((e) => e !== task));
+      setIncompleteTasks([updatedTask, ...incompleteTasks.filter((e) => e !== task)]);
+    }
   };
 
   return (
