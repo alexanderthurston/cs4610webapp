@@ -15,7 +15,7 @@ export class ProjectMemberController {
   @Post('/members')
   public async create(@Body() body: ProjectMemberBody) {
     let projectMember = new ProjectMember();
-    projectMember.userId = (await this.userService.findByEmail(body.email)).id
+    projectMember.userId = (await this.userService.findByEmail(body.email)).id;
     projectMember.projectId = body.projectId;
     projectMember = await this.projectMemberService.createProjectMember(projectMember);
     return { projectMember };

@@ -31,9 +31,7 @@ export class UsersService {
   }
 
   findByEmail(email: string) {
-    return this.usersRespository.findOne({
-      where: email
-    })
+    return this.usersRespository.findOne({ email });
   }
 
   create(user: User) {
