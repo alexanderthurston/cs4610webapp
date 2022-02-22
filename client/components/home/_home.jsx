@@ -43,7 +43,7 @@ export const Home = () => {
       name: name,
     };
     const { project } = await api.post('/projects', projectBody);
-    console.log(projects);
+    // console.log(projects);
     setLeaderProjects([...leaderProjects, project]);
   };
 
