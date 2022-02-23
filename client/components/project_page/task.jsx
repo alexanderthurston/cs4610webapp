@@ -37,7 +37,7 @@ export const Task = ({
       userId: newUserId,
     };
     const { updatedTask } = await api.put(`/projects/${task.projectId}/tasks/${task.id}`, taskBody);
-
+    console.log(updatedTask);
     if (updatedTask.status === 'Done') {
       setDoneTasks([updatedTask, ...doneTasks.filter((e) => e !== task)]);
       setIncompleteTasks(incompleteTasks.filter((e) => e !== task));

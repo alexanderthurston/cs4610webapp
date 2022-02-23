@@ -2,7 +2,11 @@ import { Button } from '../common/button';
 import { useState } from 'react';
 
 export const ProjectMemberSelect = ({ projectMembers, updateTaskAssignment }) => {
+  if (!projectMembers.length) {
+    return null;
+  }
   const [assigned, setAssigned] = useState(projectMembers[0].userId);
+
   return (
     <div className="border-2 p-4 w-full">
       <p className="underline">Assign Project Member:</p>
