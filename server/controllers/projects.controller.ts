@@ -89,6 +89,7 @@ export class ProjectsController {
     task.timeEstimation = body.timeEstimation;
     task.status = body.status;
     task.user = await this.usersService.find(jwtBody.userId);
+    task.project = await this.projectsService.findProjectById(body.projectId);
     task = await this.tasksService.createTask(task);
     return { task };
   }
@@ -104,6 +105,7 @@ export class ProjectsController {
     task.timeEstimation = body.timeEstimation;
     task.status = body.status;
     task.user = await this.usersService.find(jwtBody.userId);
+    task.project = await this.projectsService.findProjectById(body.projectId);
     task = await this.tasksService.createTask(task);
     return { task };
   }
@@ -111,10 +113,11 @@ export class ProjectsController {
   @Delete('projects/:id/tasks/:task_id')
   public async deleteTask(@Param('task_id') task_id: string, @JwtBody() jwtBody: JwtBodyDto) {
     const task = await this.tasksService.findTaskById(parseInt(task_id, 10));
-    if (task.userId != jwtBody.userId) {
-      return { success: false };
+    console.log(task.project.leaderId);
+    if (task.userId == jwtBody.userId || task.project.leaderId == jwtBody.userId) {
+      this.tasksService.deleteTask(task);
+      return { success: true };
     }
-    this.tasksService.deleteTask(task);
-    return { success: true };
+    return { success: false };
   }
 }

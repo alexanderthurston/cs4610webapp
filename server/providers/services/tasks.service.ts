@@ -13,7 +13,7 @@ export class TasksService {
   findAllForProject(projectId: number): Promise<Task[]> {
     return this.taskRepository.find({
       where: { projectId },
-      relations: ['user'],
+      relations: ['user', 'project'],
     });
   }
 
@@ -24,7 +24,7 @@ export class TasksService {
   findTaskById(id: number): Promise<Task> {
     return this.taskRepository.findOne({
       where: { id },
-      relations: ['user'],
+      relations: ['user', 'project'],
     });
   }
 
